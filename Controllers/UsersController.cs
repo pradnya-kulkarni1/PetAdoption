@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace PetAdoption.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("MyPolicy")]
     public class UsersController : ControllerBase
     {
         private readonly SqlDbContext _context;
@@ -81,6 +83,20 @@ namespace PetAdoption.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
+        }
+
+        [HttpPost("login")]
+        public ActionResult GetUserLogin([FromBody] UserLogin userlogin)
+        {
+            var logindetails = _context.Users.Where(u=> u.Email == userlogin.Email &&
+                                                    u.Password == userlogin.Password).FirstOrDefault();
+            
+            if (logindetails == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(logindetails);
         }
 
         // DELETE: api/Users/5

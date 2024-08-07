@@ -14,7 +14,7 @@ namespace PetAdoption.Models
 
         public Species? Species { get; set; }
 
-        public List<Pet> Pets { get; set; }
+        public List<Pet>? Pets { get; set; }
     }
 }
 /*
