@@ -11,7 +11,7 @@ namespace PetAdoption.Models
 
         public int AdoptRequestId { get; set; }
         public int PetId { get; set; }
-        public DateOnly AdoptionCompletedDate { get; set; }
+        public DateTime AdoptionCompletedDate { get; set; }
 
         public Boolean PaymentDone { get; set; }
         public Boolean PaperworkDone { get; set; }

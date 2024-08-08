@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,11 @@ namespace PetAdoption.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("MyPolicy")]
     public class AdoptionsController : ControllerBase
     {
+        const string adopted = "ADOPTED";
+
         private readonly SqlDbContext _context;
 
         public AdoptionsController(SqlDbContext context)
@@ -77,10 +81,39 @@ namespace PetAdoption.Controllers
         [HttpPost]
         public async Task<ActionResult<Adoption>> PostAdoption(Adoption adoption)
         {
+            adoption.Pet.Available = false;
+
             _context.Adoption.Add(adoption);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAdoption", new { id = adoption.Id }, adoption);
+        }
+        [HttpPost("adopted/{id}")]
+        public async Task<ActionResult<Adoption>> Adopted(int id)
+        {
+            var req = await _context.Adoption.FindAsync(id);
+
+            if (req == null)
+            {
+                return NotFound();
+            }
+
+            req.AdoptionCompletedDate = DateTime.Now;
+            req.Pet.Available = false;
+            req.PaperworkDone = true;
+            req.PaymentDone = true;
+            req.AdoptionRequest.Status = adopted;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+
+            return req;
         }
 
         // DELETE: api/Adoptions/5

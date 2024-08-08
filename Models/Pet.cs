@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetAdoption.Models
@@ -15,6 +16,8 @@ namespace PetAdoption.Models
         public int Birthyear { get; set; }
         public int Birthmonth { get; set; }
         public string? PhotoPath { get; set; }
+
+        public bool Available { get; set; }
         public Breed? Breed { get; set; }
         public List<Adoption>? Adoptions { get; set; }
     }
