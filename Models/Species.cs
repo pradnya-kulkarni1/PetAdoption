@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PetAdoption.Models
 {
@@ -13,8 +14,8 @@ namespace PetAdoption.Models
 
         [Required]
         public decimal AdoptionFee { get; set; }
-
-        public List<Breed>? Breeds { get; set; }
+        [JsonIgnore]
+        public ICollection<Breed> Breed { get; set; }
     }
 }
 /*

@@ -26,10 +26,10 @@ namespace PetAdoption.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pet>>> GetPets()
         {
-            return await _context.Pets.ToListAsync();
+            return await _context.Pets.Include(p => p.Breed).ThenInclude(b => b.Species).ToListAsync();
         }
 
-        // GET: api/Pets/5
+        // GET: api/Pets/5.
         [HttpGet("{id}")]
         public async Task<ActionResult<Pet>> GetPet(int id)
         {

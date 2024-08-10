@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PetAdoption.Models
 {
@@ -9,12 +10,12 @@ namespace PetAdoption.Models
         [Key]
         public int Id { get; set; }
 
-        public int SpeciesId { get; set; }
         public string name {  get; set; }
 
-        public Species? Species { get; set; }
-
-        public List<Pet>? Pets { get; set; }
+        public Species Species { get; set; }
+       
+        [JsonIgnore]
+        public ICollection<Pet> Pets { get; set; }
     }
 }
 /*

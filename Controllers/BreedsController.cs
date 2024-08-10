@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,6 @@ namespace PetAdoption.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("MyPolicy")]
     public class BreedsController : ControllerBase
     {
         private readonly SqlDbContext _context;
@@ -26,7 +24,7 @@ namespace PetAdoption.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Breed>>> GetBreeds()
         {
-            return await _context.Breeds.ToListAsync();
+            return await _context.Breeds.Include(p => p.Species).ToListAsync();
         }
 
         // GET: api/Breeds/5

@@ -18,7 +18,7 @@ namespace PetAdoption.Models
         public string? PhotoPath { get; set; }
 
         public bool Available { get; set; }
-        public Breed? Breed { get; set; }
+        public Breed Breed { get; set; }
         public List<Adoption>? Adoptions { get; set; }
     }
 }
