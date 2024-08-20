@@ -86,6 +86,9 @@ namespace PetAdoption.Controllers
         public async Task<ActionResult<AdoptionRequest>> PostAdoptionRequest(AdoptionRequest adoptionRequest)
         {
             adoptionRequest.Status = review;
+            adoptionRequest.SubmittedDate= DateTime.Now;
+            adoptionRequest.ReferenceCheck = false;
+            adoptionRequest.BackgroundCheck = false;
 
             _context.AdoptionRequests.Add(adoptionRequest);
             

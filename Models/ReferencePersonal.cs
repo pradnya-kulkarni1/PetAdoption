@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetAdoption.Models
 {
-	[Table("RefrencePersonal")]
+	[Table("ReferencePersonal")]
 	public class ReferencePersonal
 	{
 		[Key]

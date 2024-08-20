@@ -17,10 +17,10 @@ namespace PetAdoption.Models
         public int customerId { get; set; }
 
         [Required]
-        public int referencePId { get; set; }
+        public int referencePersonalId { get; set; }
 
         [Required]
-        public int referenceBId { get; set; }
+        public int referenceBackgroundId { get; set; }
 
         public DateTime SubmittedDate { get; set; }
 
